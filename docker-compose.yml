@@ -1,0 +1,39 @@
+version: '2'
+
+services:
+  pymedusa:
+    image: pymedusa/medusa:develop
+    ports:
+    - "8081:8081"
+    dns:
+    - 1.1.1.1
+    volumes:
+    - /srv/medusa:/config
+    - /srv/torrents/downloaded:/downloads
+    - /srv/series:/tv
+    - /srv/anime:/anime
+    environment:
+    - TZ=Europe/Lisbon
+  radarr:
+    image: linuxserver/radarr:latest
+    ports:
+    - "7878:7878"
+    dns:
+    - 1.1.1.1
+    volumes:
+    - /srv/radarr:/config
+    - /srv/torrents/downloaded:/opt/downloads/downloaded
+    - /srv/movies:/movies
+    environment:
+    - TZ=Europe/Lisbon
+  transmission:
+    image: linuxserver/transmission:latest
+    ports:
+    - "9091:9091"
+    volumes:
+    - /srv/transmission:/opt/transmission
+    - /srv/torrents:/opt/downloads
+    dns:
+    - 1.1.1.1
+    environment:
+    - TZ=Europe/Lisbon
